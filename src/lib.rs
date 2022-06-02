@@ -50,23 +50,26 @@ impl<'a> Builder for ProductionBuilder<'a> {
 
     fn to_string(self) -> String {
         let mut result = String::new();
-        let get_line_start = |result: &String| {
-            if result.len() > 0 {
+        let get_line_start = |current_result: &String| {
+            if current_result.len() > 0 {
                 return "\n";
             }
             ""
         };
+        let mut add = |label: &str, value: &String| {
+            result.push_str(&format!("{}{}: {}", get_line_start(&result), label, value));
+        };
         if let Some(value) = self.items.get("foo") {
-            result.push_str(&format!("{}foo: {}", get_line_start(&result), value));
+            add("foo", value);
         }
         if let Some(value) = self.items.get("bar") {
-            result.push_str(&format!("{}bar: {}", get_line_start(&result), value));
+            add("bar", value);
         }
         if let Some(value) = self.items.get("baz") {
-            result.push_str(&format!("{}baz: {}", get_line_start(&result), value));
+            add("baz", value);
         }
         if let Some(value) = self.items.get("quux") {
-            result.push_str(&format!("{}quux: {}", get_line_start(&result), value));
+            add("quux", value);
         }
         result
     }
