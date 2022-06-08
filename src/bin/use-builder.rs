@@ -4,6 +4,8 @@ struct ProductionBuilderWrapper<'a> {
     builder: ProductionBuilder<'a>,
 }
 
+/// Production code not exposed to unit tests is minimized in methods that simply
+/// make corresponding calls to the wrapped builder value.
 impl<'a> BuilderWrapper for ProductionBuilderWrapper<'a> {
     fn set_foo(&mut self, value: &str) {
         self.builder.with_foo(value);
